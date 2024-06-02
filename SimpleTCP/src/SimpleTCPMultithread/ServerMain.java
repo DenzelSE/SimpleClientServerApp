@@ -5,6 +5,8 @@ import java.net.Socket;
 
 public class ServerMain {
     
+    private int clientNumber = 1;
+    
     public ServerMain() throws Exception{
         
         ServerSocket server_socket = new ServerSocket(2024);
@@ -12,11 +14,15 @@ public class ServerMain {
 
         while(true){
             Socket socket = server_socket.accept();
-            ServerThread server_thread = new ServerThread(socket);
+            ServerThread server_thread = new ServerThread(socket, this);
             Thread thread = new Thread(server_thread);
             thread.start();
         }
-         
+    }
+    
+
+    public int getClientNumber() {
+        return clientNumber++;
     }
 
     public static void main(String[] args) {
